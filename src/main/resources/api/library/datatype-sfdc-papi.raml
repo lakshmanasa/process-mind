@@ -1,0 +1,112 @@
+#%RAML 1.0 Library
+
+types:
+  acc:
+    type: object
+    properties:
+      isTest?: boolean
+      isApiDeveloper: boolean
+      gateway: string
+      accountName: string
+      accountNumber: string
+      billToContact: 
+       type: object
+       properties:
+         address:
+           type: address
+         email: string
+         phone: string
+         name: 
+          type: name
+      currencyCode: string
+      isAutoPayEnabled: boolean
+      paymentMethod: 
+       type: object
+       properties:
+        cardNumber: string
+        creditCardType: string
+        cardExpirationMonth: string
+        cardExpirationYear: string
+        securityCode: string
+        cardHolderInfo: 
+          type: object
+          properties:
+            address: 
+              type: address
+            name: string
+            email: string
+            firstName: string
+            middleInitial: string
+            lastName: string
+            isUseSplittedNames: boolean
+            phoneNumber: string
+        isDefault: boolean
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  address:
+    type: object
+    properties:
+      city: string
+      country: string
+      countryCode: string
+      line1: string
+      line2: string
+      state: string
+      stateCode: string
+      zipCode: string
+  
+
+  name: 
+    type: object
+    properties:
+      firstName: string
+      lastName: string
+        
+      

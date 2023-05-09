@@ -1,0 +1,6 @@
+%dw 2.0
+
+type auto_d3d090c7_3f45_4a45_ae5b_29efe3cf8bf7_Input_Payload = {|
+  compositeRequest: Array<{|    method: String,     url: String,     referenceId: String  |}>
+|}
+

@@ -1,0 +1,16 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  eventId: string
+  eventType: string
+  eventData:
+    type: array
+    items:
+      type: object
+      properties:
+        internalId: string
+  source: string
+  targets: string
+  dataType: string
+  timeStamp: string

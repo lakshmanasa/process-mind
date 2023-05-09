@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+
+    <flow name="db-papi-main">
+        <http:listener config-ref="db-papi-httpListenerConfig" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="db-papi-config" />
+		<error-handler ref="error-framework-papi-Error_Handler" />
+
+    </flow>
+    <flow name="db-papi-console">
+        <http:listener config-ref="db-papi-httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="db-papi-config" />
+		<error-handler ref="error-framework-papi-Error_Handler" />
+
+    </flow>
+    <flow name="put:\papi\db\accounts:application\json:db-papi-config">
+		<flow-ref doc:name="update-db-account-papi" doc:id="796a3447-05f4-4d30-8e84-26799daa2078" name="update-db-account-papi"/>
+    </flow>
+    <flow name="get:\papi\db\accounts\(id):db-papi-config">
+		<flow-ref doc:name="getById-db-account-papi" doc:id="def6de4f-5094-40a9-a538-e4944d15b3b3" name="getById-db-account-papi"/>
+    </flow>
+    <flow name="post:\papi\db\accounts:application\json:db-papi-config">
+		<flow-ref doc:name="post-db-account-papiFlow" doc:id="ad85bea9-672e-45bc-94d1-f951fd4798bc" name="post-db-account-papiFlow"/>
+    </flow>
+</mule>

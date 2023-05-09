@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+
+	<flow name="sfdc-account-papi" doc:id="b7ffc02b-d04b-4f75-83bc-39cc3e431abd" >
+		<json-logger:logger doc:name="Logger" doc:id="dcc1fdf7-599b-4259-ad6f-527f9ca472a8" config-ref="JSON_Logger_Config" message="After entered into Process API, the payload is this::::::"/>
+		<ee:transform doc:name="mapping to sfdc object" doc:id="284e6449-bf5a-4720-aa3c-d9ca4cefe285" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "compositeRequest": [
+    {
+      "method": "POST",
+      "url": "/services/data/v51.0/sobjects/account__c",
+      "referenceId": "a",
+      "body": 
+        {
+AccountSource__c: payload.isApiDeveloper,
+Account_Classification__c: payload.isApiDeveloper,
+APIMBOGUID__c: "clientAccountId",
+BillingCity__c: payload.billToContact.address.city,
+BillingCountryCode__c: payload.billToContact.address.countryCode,
+BillingPostalCode__c: payload.billToContact.address.zipCode,
+BillingStateCode__c: payload.billToContact.address.state,
+BillingStreet__c: payload.billToContact.address.line1 ++ "-" ++ payload.billToContact.address.line2,
+CurrencyIsoCode__c: payload.currencyCode,
+Description__c: "App to SFDC Account Creation test",
+industry__c: "other",
+isTest__c: payload.isTest default "false",
+Name: payload.accountName,
+OwnerID__c: "0053i000002twex",
+Phone__c: payload.billToContact.phone,
+QS_Bill_To_Email__c: payload.billToContact.email,
+SBQQ_TaxExempt__c: "0",
+Subvertical__c: "other",
+RecordTypeId__c: "0123i000000rtue"
+
+}
+        },
+        {
+        	"method": "POST",
+        	"url": "/services/data/v51.0/sobjects/contact__c",
+        	"referenceId": "b",
+        	"body": {
+        		AccountId__c: "@{a.id}",
+        		Email__c: payload.billToContact.email,
+        		FirstName__c: payload.billToContact.name.firstName,
+        		LastName__c: payload.billToContact.name.lastName,
+        		MiddleName__c: payload.paymentMethod.cardHolderInfo.middleInitial,
+        		Phone__c: payload.billToContact.phone,
+        		RecordTypeId__c: "0123i000000rtue",
+        		Name: payload.accountName
+        	}
+        },
+        {
+        	"method": "POST",
+        	"url": "/services/data/v51.0/sobjects/BillingJunction__c",
+        	"referenceId": "c",
+        	"body": {
+        		AccountId__c: "@{a.id}",
+        		Name: payload.accountName,
+        		CurrencyIsoCode__c: payload.currencyCode,
+        		IntegrationStatus__c: "New",
+        		Sync_Immediate__c : "ok"
+        	}
+        }
+      
+    ]}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="values of /sfdc/sapi to insert the record" doc:id="6792a2d6-caa3-4714-a224-0426dc7d8897" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="basepath" ><![CDATA["/api/sapi"]]></ee:set-variable>
+				<ee:set-variable variableName="path" ><![CDATA["/sfdc/accounts"]]></ee:set-variable>
+				<ee:set-variable variableName="port" ><![CDATA['${http.req.sfdc.port}']]></ee:set-variable>
+				<ee:set-variable variableName="method" ><![CDATA["POST"]]></ee:set-variable>
+				<ee:set-variable variableName="host" ><![CDATA['${http.req.host}']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="calling to common HttpRequest" doc:id="cba2a7d5-da69-4a91-b67e-e5aeceae146c" name="common-HttpRequestSub_Flow"/>
+	</flow>
+</mule>

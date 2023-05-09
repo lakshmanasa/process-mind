@@ -1,0 +1,64 @@
+%dw 2.0
+
+type auto_b7ffc02b_d04b_4f75_83bc_39cc3e431abd_Input_Payload = {
+  isTest?: Boolean, 
+  isApiDeveloper: Boolean, 
+  accountName: String, 
+  isAutoPayEnabled: Boolean, 
+  paymentMethod: {
+    isDefault: Boolean, 
+    cardExpirationMonth: String, 
+    cardExpirationYear: String, 
+    securityCode: String, 
+    cardHolderInfo: {
+      firstName: String, 
+      lastName: String, 
+      isUseSplittedNames: Boolean, 
+      address: {
+        country: String, 
+        zipCode: String, 
+        city: String, 
+        countryCode: String, 
+        stateCode: String, 
+        state: String, 
+        line2: String, 
+        line1: String, 
+        _?: Any
+      }, 
+      middleInitial: String, 
+      phoneNumber: String, 
+      name: String, 
+      email: String, 
+      _?: Any
+    }, 
+    creditCardType: String, 
+    cardNumber: String, 
+    _?: Any
+  }, 
+  accountNumber: String, 
+  billToContact: {
+    address: {
+      country: String, 
+      zipCode: String, 
+      city: String, 
+      countryCode: String, 
+      stateCode: String, 
+      state: String, 
+      line2: String, 
+      line1: String, 
+      _?: Any
+    }, 
+    phone: String, 
+    name: {
+      firstName: String, 
+      lastName: String, 
+      _?: Any
+    }, 
+    email: String, 
+    _?: Any
+  }, 
+  currencyCode: String, 
+  gateway: String, 
+  _?: Any
+}
+

@@ -1,0 +1,34 @@
+#%RAML 1.0
+title: db-papi
+
+types:
+  post-datatypes: !include db-datatypes/dataType-post-db.raml
+  put-datatypes: !include db-datatypes/dataType-put-db.raml 
+
+traits:
+  post-req: !include traits/post-db-trait.raml
+  put-req: !include traits/put-db-trait.raml
+  get-req: !include traits/getById-db-trait.raml
+
+resourceTypes:
+  post-put-met: !include resourceTypes/post-put-resourceType.raml
+  get-met: !include resourceTypes/get-resourceType.raml
+
+
+/papi:
+  /db/accounts:
+    type:
+      post-put-met
+
+    
+    /{id}:
+      type:
+        get-met
+
+
+      
+
+
+          
+          
+          

@@ -1,0 +1,54 @@
+{
+"isTest": true,
+"isApiDeveloper": true,
+"gateway": "AriaSandbox",
+"accountName": "Mulesoft123",
+"accountNumber": "API-31512",
+"billToContact": {
+"address": {
+"city": "CA",
+"country": "US",
+"countryCode": "US",
+"line1": "4115 Broad St",
+"line2": "San Luis Obispo",
+"state": "CA",
+"stateCode": "CA",
+"zipCode": "93401"
+},
+"email": "TeamPublicAPI45@test.com",
+"phone":"1336867145",
+"name": {
+"firstName": "Mule",
+"lastName": "Soft"
+}
+},
+"currencyCode": "USD",
+"isAutoPayEnabled": true,
+"paymentMethod": {
+"cardNumber": "4012001011000771",
+"creditCardType": "Visa",
+"cardExpirationMonth": "02",
+"cardExpirationYear": "2025",
+"securityCode": "837",
+"cardHolderInfo": {
+"address": {
+"city": "CA",
+"country": "US",
+"countryCode": "US",
+"line1": "4115 Broad St",
+"line2": "San Luis Obispo",
+"state": "CA",
+"stateCode": "CA",
+"zipCode": "93401"
+},
+"name": "mulesoft123",
+"email": "mulesoft123@test.com",
+"firstName": "Mule",
+"middleInitial": "K",
+"lastName": "Soft",
+"isUseSplittedNames": true,
+"phoneNumber": "9878934145"
+},
+"isDefault": true
+}
+}

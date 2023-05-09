@@ -1,0 +1,13 @@
+{
+  "eventId": "cbedafbb-ffc1-452e-9468-7513e9c69573",
+  "eventType": "2",
+  "eventData": [
+    {
+      "internalId": "2"
+    }
+  ],
+  "source": "salesforce",
+  "targets": "database",
+  "dataType": "object",
+  "timeStamp": "06-April-2023-11:27:03"
+}

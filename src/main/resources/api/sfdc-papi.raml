@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: account-papi
+
+uses:
+  lib: library/datatype-sfdc-papi.raml
+
+traits:
+  post-req: !include traits/post-req-sfdc-trait.raml
+
+resourceTypes:
+  post-sfdc: !include resourceTypes/post-sfdc-resourceType.raml
+
+/papi:
+  /sfdc/accounts:
+    type:
+      post-sfdc
+
+
+              
+         

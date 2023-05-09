@@ -1,0 +1,11 @@
+#%RAML 1.0 Trait
+
+      body:
+        application/json:
+          type: put-datatypes
+          example: !include ../Examples/put-requestbody-db-papi.json
+      responses:
+        201:
+          body:
+            application/json:
+              example: !include ../Examples/put-db-response.json
